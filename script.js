@@ -1,8 +1,9 @@
 let correctAnswer = generateCorrectAnswer();
 console.log("answer is: " + correctAnswer);
-let totalTurns = 3;
+let totalTurns = 2;
 let currentTurn = 1;
 let answersList = [];
+
 
 function resetValues(){
     correctAnswer = generateCorrectAnswer();
@@ -14,6 +15,7 @@ function resetValues(){
     document.getElementById("rightOrWrong").textContent = '';
     document.getElementById("inputBox").value = '';
     document.getElementById("higherLower").textContent = '';
+    document.getElementById("guessesList").textContent = '';
 }
 
 //generates random number btwn 1 and 100. This is the number that wins the game
@@ -29,20 +31,21 @@ function gameLoop(){
     //win condition
     if(currentGuess === correctAnswer){
         document.getElementById("gameOverMessage").textContent = "You win!";
+    
         playAgain();
     }
     //user guess incorrectly
     else{
         answersList.push(currentGuess);
         currentTurn = currentTurn + 1;
-        document.getElementById("rightOrWrong").textContent = "Wrong answer, try again!";
+        //document.getElementById("rightOrWrong").textContent = "Wrong answer, try again!";
         document.getElementById("inputBox").value = '';
         displayGuesses(answersList);
         if(currentGuess > correctAnswer){
-            document.getElementById("higherLower").textContent = "Your current Guess is too high";
+            document.getElementById("higherLower").textContent = "Your current Guess is too high.";
         }
         else{
-            document.getElementById("higherLower").textContent = "Your current Guess is too low";
+            document.getElementById("higherLower").textContent = "Your current Guess is too low.";
 
         }
     }
@@ -67,10 +70,6 @@ function playAgain(){
     }
 }
 
-function resetToStart(){
-
-}
-
 let submitButton = document.getElementById("inputBoxButton");
 submitButton.addEventListener('click', function(){
     if(document.getElementById("inputBox").value === ''){
@@ -80,5 +79,14 @@ submitButton.addEventListener('click', function(){
         gameLoop();
     }
 });
+submitButton.addEventListener("keydown", function(event){
+    console.log('here');
+    if (event.keyCode === 13) {
+        // Cancel the default action, if needed
+        event.preventDefault();
+        // Trigger the button element with a click
+        document.getElementById("inputBoxButton").click();
+    }
+})
 
 
