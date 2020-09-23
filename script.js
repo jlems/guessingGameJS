@@ -1,11 +1,15 @@
-let correctAnswer = generateCorrectAnswer();
-console.log("answer is: " + correctAnswer);
-let totalTurns = 2;
-let currentTurn = 1;
-let answersList = [];
+
+// let correctAnswer = generateCorrectAnswer();
+// console.log("answer is: " + correctAnswer);
+// let totalTurns = 5;
+// let currentTurn = 1;
+// let answersList = [];
+initValues();
 
 
-function resetValues(){
+
+function initValues(){
+    document.getElementById("playAgain").style.display = "none";
     correctAnswer = generateCorrectAnswer();
     console.log("From resetValues: answer is: " + correctAnswer);
     totalTurns = 3;
@@ -31,7 +35,9 @@ function gameLoop(){
     //win condition
     if(currentGuess === correctAnswer){
         document.getElementById("gameOverMessage").textContent = "You win!";
-    
+        answersList.push(currentGuess);
+        displayGuesses(answersList);
+        document.getElementById("higherLower").textContent = '';
         playAgain();
     }
     //user guess incorrectly
@@ -65,9 +71,7 @@ function displayGuesses(guessesList){
 }
 
 function playAgain(){
-    if(confirm("Play again?")){
-        resetValues();
-    }
+    document.getElementById("playAgain").style.display = "block";
 }
 
 let submitButton = document.getElementById("inputBoxButton");
@@ -79,14 +83,19 @@ submitButton.addEventListener('click', function(){
         gameLoop();
     }
 });
-submitButton.addEventListener("keydown", function(event){
-    console.log('here');
-    if (event.keyCode === 13) {
-        // Cancel the default action, if needed
-        event.preventDefault();
-        // Trigger the button element with a click
-        document.getElementById("inputBoxButton").click();
-    }
-})
+
+let playAgainButton = document.getElementById("playAgain");
+playAgainButton.addEventListener('click', function(){
+  initValues()
+});
+// submitButton.addEventListener("keydown", function(event){
+//     console.log('here');
+//     if (event.keyCode === 13) {
+//         // Cancel the default action, if needed
+//         event.preventDefault();
+//         // Trigger the button element with a click
+//         document.getElementById("inputBoxButton").click();
+//     }
+// })
 
 
